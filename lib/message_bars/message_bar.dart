@@ -33,7 +33,7 @@ class MessageBar extends StatelessWidget {
   final bool replying;
   final String replyingTo;
   final List<Widget> actions;
-  final TextEditingController _textController = TextEditingController();
+  final TextEditingController textController;
   final Color replyWidgetColor;
   final Color replyIconColor;
   final Color replyCloseColor;
@@ -58,6 +58,7 @@ class MessageBar extends StatelessWidget {
     this.onTextChanged,
     this.onSend,
     this.onTapCloseReply,
+    required this.textController,
   });
 
   /// [MessageBar] builder method
@@ -121,7 +122,7 @@ class MessageBar extends StatelessWidget {
                   Expanded(
                     child: Container(
                       child: TextField(
-                        controller: _textController,
+                        controller: textController,
                         keyboardType: TextInputType.multiline,
                         textCapitalization: TextCapitalization.sentences,
                         minLines: 1,
@@ -164,11 +165,11 @@ class MessageBar extends StatelessWidget {
                         size: 24,
                       ),
                       onTap: () {
-                        if (_textController.text.trim() != '') {
+                        if (textController.text.trim() != '') {
                           if (onSend != null) {
-                            onSend!(_textController.text.trim());
+                            onSend!(textController.text.trim());
                           }
-                          _textController.text = '';
+                          textController.text = '';
                         }
                       },
                     ),
